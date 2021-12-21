@@ -12,7 +12,7 @@
 Diff: remove [3] from 3
 Diff: add [3] to 2
 Diff: [1][2][3][0][4][5]
-Diff: freshMap isEmpty
+Diff: freshList isEmpty
 merged>>> [1][2][3][0][4][5]
 origin>>> [1][2][3][0][4][5]
 addList>>> [4][5][6]

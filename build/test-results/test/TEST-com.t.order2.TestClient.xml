@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.t.order2.TestClient" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-12-21T14:22:05" hostname="HANG" time="0.033">
+<testsuite name="com.t.order2.TestClient" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-12-21T14:38:26" hostname="HANG" time="0.031">
   <properties/>
-  <testcase name="refreshCaseAuto()" classname="com.t.order2.TestClient" time="0.033"/>
+  <testcase name="refreshCaseAuto()" classname="com.t.order2.TestClient" time="0.031"/>
   <system-out><![CDATA[origin>>> [0][1][2][3][4][5]
 addList>>> [1][2][3]
 Diff: =========1=========
@@ -16,7 +16,7 @@ Diff: =========3=========
 Diff: remove [3] from 3
 Diff: add [3] to 2
 Diff: [1][2][3][0][4][5]
-Diff: freshMap isEmpty
+Diff: freshList isEmpty
 merged>>> [1][2][3][0][4][5]
 origin>>> [1][2][3][0][4][5]
 addList>>> [4][5][6]

@@ -24,33 +24,34 @@ public class DiffUtil2<T extends Model2> {
      */
     public List<T> merge(List<T> originList, List<T> freshList, int offset) {
         List<T> result = new ArrayList<>(originList);
-        Map<String, T> freshMap = new HashMap<>();
-        for (int i = 0; i < freshList.size(); i++) {
-            T newer = freshList.get(i);
-            newer.index = offset + i;
-            freshMap.put(newer.key, newer);
-        }
-        for (int i = 0; i < originList.size(); i++) {
-            originList.get(i).index = i;
-        }
+        // 记录新数据index
+        for (int i = 0; i < freshList.size(); i++) freshList.get(i).index = offset + i;
 
         int step = 1;
         for (int i = 0; i < originList.size(); i++) {
             T origin = originList.get(i);
+            // 记录老数据index
             origin.index = i;
             boolean hasAction = false;
-            for (T fresh : freshList) {
+            Iterator<T> iterator = freshList.iterator();
+            while (iterator.hasNext()) {
+                // 遍历新数据, 存在和老数据相同的item替换掉老的
+                T fresh = iterator.next();
                 if (Objects.equals(origin.key, fresh.key)/* || Objects.equals(origin.root, fresh.root)*/) {
                     log("=========" + step++ + "=========");
                     if (origin.index == fresh.index) {
+                        // 如果index相同 直接替换
                         log("same index. replace " + fresh.key + " > " + origin.key);
-                        result.set(origin.index, freshMap.remove(fresh.key));
+                        result.set(origin.index, fresh);
+                        iterator.remove();
                     } else {
+                        // 如果index不相同 将老的删掉再按新的index加入新数据
                         log("remove " + result.get(origin.index) + " from " + origin.index);
                         result.remove(origin.index);
 
                         log("add " + fresh.key + " to " + fresh.index);
-                        result.add(fresh.index, freshMap.remove(fresh.key));
+                        result.add(fresh.index, fresh);
+                        iterator.remove();
                     }
                     hasAction = true;
                 }
@@ -61,13 +62,9 @@ public class DiffUtil2<T extends Model2> {
             }
         }
 
-        if (freshMap.isEmpty()) {
-            log("freshMap isEmpty");
-        } else {
-            List<Map.Entry<String, T>> l = new ArrayList<>(freshMap.entrySet());
-            l.sort(Comparator.comparingInt(t0 -> t0.getValue().index));
-            for (Map.Entry<String, T> entry : l) {
-                T newData = entry.getValue();
+        if (!freshList.isEmpty()) {
+            // 未匹配的新数据按index插入
+            for (T newData : freshList) {
                 if (newData.index < result.size()) {
                     log("insert newData: " + newData + " to " + newData.index);
                     result.add(newData.index, newData);
