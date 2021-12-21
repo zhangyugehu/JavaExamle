@@ -11,6 +11,10 @@ public class ListUtils {
         O invoke(I input);
     }
 
+    public static <T> String toString(List<T> list) {
+        return toString(list, Object::toString);
+    }
+
     public static <T> String toString(List<T> list, IConvert<T, String> convert) {
         StringBuilder sb = new StringBuilder();
         for (T data : list) {
