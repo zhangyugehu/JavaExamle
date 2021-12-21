@@ -1,46 +1,24 @@
-origin>>> [0][1][2][3][4][5]
-addList>>> [1][2][3]
 Diff: =========1=========
-Diff: remove [1] from 1
-Diff: add [1] to 0
-Diff: [1][0][2][3][4][5]
+Diff: remove B from 1
+Diff: add B to 0
+Diff: BACDEF
 Diff: =========2=========
-Diff: remove [2] from 2
-Diff: add [2] to 1
-Diff: [1][2][0][3][4][5]
+Diff: remove C from 2
+Diff: add C to 1
+Diff: BCADEF
 Diff: =========3=========
-Diff: remove [3] from 3
-Diff: add [3] to 2
-Diff: [1][2][3][0][4][5]
-Diff: freshList isEmpty
-merged>>> [1][2][3][0][4][5]
-origin>>> [1][2][3][0][4][5]
-addList>>> [4][5][6]
+Diff: remove D from 3
+Diff: add D to 2
+Diff: BCDAEF
 Diff: =========1=========
-Diff: remove [4] from 4
-Diff: add [4] to 3
-Diff: [1][2][3][4][0][5]
+Diff: remove E from 4
+Diff: add E to 3
+Diff: BCDEAF
 Diff: =========2=========
-Diff: remove [5] from 5
-Diff: add [5] to 4
-Diff: [1][2][3][4][5][0]
- Diff: insert newData: [6] to 5
-!merged>>> [1][2][3][4][5][6][0]
-!origin>>> [1][2][3][4][5][6][0]
-addList>>> [7][8][9]
- Diff: insert newData: [7] to 6
- Diff: insert newData: [8] to 7
- Diff: insert newData: [9] to 8
-*merged>>> [1][2][3][4][5][6][7][8][9][0]
-*origin>>> [1][2][3][4][5][6][7][8][9][0]
-addList>>> [10][11][12]
-!Diff: insert newData: [10] to 9
-"Diff: insert newData: [11] to 10
-"Diff: insert newData: [12] to 11
-6merged>>> [1][2][3][4][5][6][7][8][9][10][11][12][0]
-6origin>>> [1][2][3][4][5][6][7][8][9][10][11][12][0]
-addList>>> [13][14][15]
-"Diff: insert newData: [13] to 12
-"Diff: insert newData: [14] to 13
-"Diff: insert newData: [15] to 14
-Bmerged>>> [1][2][3][4][5][6][7][8][9][10][11][12][13][14][15][0]
+Diff: remove F from 5
+Diff: add F to 4
+Diff: BCDEFA
+Diff: insert newData: G to 5
+Diff: insert newData: H to 6
+Diff: insert newData: I to 7
+Diff: insert newData: J to 8

@@ -143,7 +143,7 @@ public class TestClient {
     @Test
     public void refreshCaseFull() {
         int PAGE_SIZE = 3;
-        List<Order2> listOrigin = Arrays.asList(
+        List<Order2> listOrigin = ListUtils.newArrayList(
                 new Order2("A"),
                 new Order2("B"),
                 new Order2("C"),
@@ -151,17 +151,17 @@ public class TestClient {
                 new Order2("E"),
                 new Order2("F")
         );
-        List<Order2> listAdd1 = Arrays.asList(
+        List<Order2> listAdd1 = ListUtils.newArrayList(
                 new Order2("B"),
                 new Order2("C"),
                 new Order2("D")
         );
-        List<Order2> listAdd2 = Arrays.asList(
+        List<Order2> listAdd2 = ListUtils.newArrayList(
                 new Order2("E"),
                 new Order2("F"),
                 new Order2("G")
         );
-        List<Order2> listAdd3 = Arrays.asList(
+        List<Order2> listAdd3 = ListUtils.newArrayList(
                 new Order2("H"),
                 new Order2("I"),
                 new Order2("J")

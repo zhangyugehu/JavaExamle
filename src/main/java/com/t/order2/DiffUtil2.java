@@ -1,14 +1,21 @@
 package com.t.order2;
 
-import com.t.order.DiffUtil;
-
 import java.util.*;
-import java.util.function.Consumer;
 
 /**
  * Created by hutianhang on 2021/12/21
  */
 public class DiffUtil2<T extends Model2> {
+
+    public interface IConsumer<T> {
+        boolean isSame(T origin, T fresh);
+    }
+
+    public List<T> merge(List<T> originList, List<T> freshList, int offset) {
+        return merge(originList, freshList, offset, (origin, fresh) ->
+                Objects.equals(origin.key, fresh.key)/* || Objects.equals(origin.root, fresh.root)*/
+        );
+    }
 
     /**
      * A    B
@@ -22,7 +29,7 @@ public class DiffUtil2<T extends Model2> {
      * @param offset
      * @return
      */
-    public List<T> merge(List<T> originList, List<T> freshList, int offset) {
+    public List<T> merge(List<T> originList, List<T> freshList, int offset, IConsumer<T> compare) {
         List<T> result = new ArrayList<>(originList);
         // 记录新数据index
         for (int i = 0; i < freshList.size(); i++) freshList.get(i).index = offset + i;
@@ -37,7 +44,7 @@ public class DiffUtil2<T extends Model2> {
             while (iterator.hasNext()) {
                 // 遍历新数据, 存在和老数据相同的item替换掉老的
                 T fresh = iterator.next();
-                if (Objects.equals(origin.key, fresh.key)/* || Objects.equals(origin.root, fresh.root)*/) {
+                if (compare.isSame(origin, fresh)) {
                     log("=========" + step++ + "=========");
                     if (origin.index == fresh.index) {
                         // 如果index相同 直接替换
