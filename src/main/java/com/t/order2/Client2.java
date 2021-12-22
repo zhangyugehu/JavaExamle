@@ -1,12 +1,9 @@
 package com.t.order2;
 
-import com.t.order.DiffUtil;
-import com.t.order.Model;
-import com.t.order.Order;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by hutianhang on 2021/12/21
@@ -21,11 +18,12 @@ public class Client2 {
         print(orderCase.originList, orderCase.newList);
 
         System.out.println("===========merge===========");
-        List<Order2> result = new DiffUtil2<Order2>().merge(
-                orderCase.originList,
-                orderCase.newList,
-                0
-        );
+        List<Order2> result = new DiffUtil<Order2>((origin, fresh) -> Objects.equals(origin.key, fresh.key))
+                .merge(
+                        orderCase.originList,
+                    orderCase.newList,
+                    0
+                );
 
         System.out.println("===========result===========");
         print(result);
@@ -42,7 +40,7 @@ public class Client2 {
 
 
 
-    public static class Case<T extends Model2> {
+    public static class Case<T> {
         List<T> originList;
         List<T> newList;
 
@@ -141,7 +139,7 @@ public class Client2 {
 
     private static void print(List<Order2> list) {
         for (Order2 order : list) {
-            System.out.println(order.index + " - " + order.key);
+            System.out.println(order.key);
         }
     }
 }

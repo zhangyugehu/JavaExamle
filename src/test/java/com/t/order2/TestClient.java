@@ -3,15 +3,14 @@ package com.t.order2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by hutianhang on 2021/12/21
  */
 public class TestClient {
+
+    final DiffUtil.OnDiff<Order2> consumer = (origin, fresh) -> Objects.equals(origin.key, fresh.key);
 
     @Test
     public void refreshPartCase() {
@@ -31,7 +30,7 @@ public class TestClient {
                 new Order2("D")
         );
 
-        List<Order2> result = new DiffUtil2<Order2>().merge(
+        List<Order2> result = new DiffUtil<Order2>(consumer).merge(
                 originList,
                 newList,
                 0
@@ -60,7 +59,7 @@ public class TestClient {
                 new Order2("G")
         );
 
-        List<Order2> result = new DiffUtil2<Order2>().merge(
+        List<Order2> result = new DiffUtil<Order2>(consumer).merge(
                 originList,
                 newList,
                 3
@@ -95,13 +94,13 @@ public class TestClient {
                 new Order2("G")
         );
 
-        List<Order2> result = new DiffUtil2<Order2>().merge(
+        List<Order2> result = new DiffUtil<Order2>(consumer).merge(
                 originList,
                 newList1,
                 0
         );
 
-        result = new DiffUtil2<Order2>().merge(
+        result = new DiffUtil<Order2>(consumer).merge(
                 result,
                 newList2,
                 3
@@ -120,7 +119,7 @@ public class TestClient {
     public void refreshCaseAuto() {
 
         int PAGE_SIZE = 3;
-        DiffUtil2<Order2> diff = new DiffUtil2<>();
+        DiffUtil<Order2> diff = new DiffUtil<>(consumer);
         List<Order2> result = new ArrayList<>();
         for (int i = 0; i < 2 * PAGE_SIZE; i += PAGE_SIZE) {
             for (int j = 0; j < PAGE_SIZE; j++) {
@@ -166,7 +165,7 @@ public class TestClient {
                 new Order2("I"),
                 new Order2("J")
         );
-        DiffUtil2<Order2> diff = new DiffUtil2<>();
+        DiffUtil<Order2> diff = new DiffUtil<>(consumer);
         Assertions.assertEquals("", ListUtils.toString(
                 diff.merge(
                         diff.merge(
@@ -182,5 +181,24 @@ public class TestClient {
                         PAGE_SIZE * 2
                 )
         ));
+    }
+
+
+    /**
+     * A
+     * B
+     * C    D
+     * D    C
+     *      E
+     */
+    @Test
+    public void simpleCase() {
+        List<String> merged = new DiffUtil<String>(Objects::equals).merge(
+                List.of("A", "B", "C", "D"),
+                List.of("D", "C", "E"),
+//                List.of("C", "D", "E", "F"),
+                2
+        );
+        System.out.println("merged List: " + ListUtils.toString(merged));
     }
 }
