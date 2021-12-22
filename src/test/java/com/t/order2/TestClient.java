@@ -183,22 +183,4 @@ public class TestClient {
         ));
     }
 
-
-    /**
-     * A
-     * B
-     * C    D
-     * D    C
-     *      E
-     */
-    @Test
-    public void simpleCase() {
-        List<String> merged = new DiffUtil<String>(Objects::equals).merge(
-                List.of("A", "B", "C", "D"),
-                List.of("D", "C", "E"),
-//                List.of("C", "D", "E", "F"),
-                2
-        );
-        System.out.println("merged List: " + ListUtils.toString(merged));
-    }
 }
