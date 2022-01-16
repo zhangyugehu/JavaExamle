@@ -48,17 +48,29 @@ public class DiffUtil<T> {
                         // 如果index相同 直接替换
                         log("same index " + index +". replace " + fresh.source + " > " + origin);
                         resultList.set(index, fresh.source);
-                        iterator.remove();
                     } else {
                         // 如果index不相同 将老的删掉再按新的index加入新数据
-                        T removed = resultList.remove(index);
-                        log("remove " + removed + " from " + index);
 
                         log("add " + fresh.source + " to " + fresh.index);
                         resultList.add(fresh.index, fresh.source);
-                        iterator.remove();
+
+                        // 使用下标移除
+                        int removeIndex = index;
+                        if (fresh.index < index) {
+                            removeIndex ++;
+                        }
+                        if (removeIndex < resultList.size()) {
+                            T removed = resultList.remove(removeIndex);
+                            log("remove " + removed + " from " + removeIndex + " [" + index);
+                        }
+
+                        // 使用value移除
+//                        log("remove " + origin);
+//                        resultList.remove(origin);
                     }
                     hasSame = true;
+                    iterator.remove();
+                    break;
                 }
             }
 
