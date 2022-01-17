@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 
+/**
+ * f(n) = f(n-1) + f(n-2)
+ */
 public class Fibonacci {
     private static final int COUNT = 10000;
 
@@ -20,9 +23,10 @@ public class Fibonacci {
 
     @Test
     void Solution2() {
-        for (int i = 0; i < COUNT; i++) {
-            Assertions.assertEquals(63245986, fn2(39));
-        }
+//        for (int i = 0; i < COUNT; i++) {
+//            Assertions.assertEquals(63245986, fn2(39));
+//        }
+        System.out.println(fn3(10));
     }
 
     @Test
@@ -54,31 +58,18 @@ public class Fibonacci {
     }
 
     long fn3(int n) {
-        long latest = 0;
-        long maxLeaf = 0;
-//        int index = 0;
-//        while(index < n) {
-//            if (index == 1) {
-//                maxLeaf = 1;
-//            }
-////            System.out.println("latest: " + latest + ", maxLeaf: " + maxLeaf);
-//            long tmp = latest + maxLeaf;
-//            maxLeaf = latest;
-//            latest = tmp;
-////            System.out.println("n=" + index + " >> " + latest);
-//            index ++;
-//        }
-//        return latest + maxLeaf;
-
-        long result = 0;
-        for (int i = 0; i <= n; i++) {
-            if (i == 1) {
-                maxLeaf = 1;
+        if (n == 0) return 0;
+        else if (n == 1) return 1;
+        else {
+            long latest = 1;
+            long maxLeaf = 0;
+            long result = 0;
+            for (int i = 2; i <= n; i++) {
+                result = latest + maxLeaf;
+                maxLeaf = latest;
+                latest = result;
             }
-            result = latest + maxLeaf;
-            maxLeaf = latest;
-            latest = result;
+            return result;
         }
-        return result;
     }
 }
